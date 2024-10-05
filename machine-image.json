@@ -52,6 +52,19 @@
     {
       "script": "{{template_dir}}/scripts/base.sh",
       "type": "shell"
+    },
+    {
+      "type": "ansible-local",
+      "playbook_file": "ansible/app.yml",
+      "command": "echo '{{user `vault_pass`}}' | ansible-playbook",
+      "role_paths": [
+        "ansible/roles/base",
+        "ansible/roles/php",
+        "ansible/roles/nginx",
+        "ansible/roles/app"
+      ],
+      "extra_arguments": ["--vault-password-file=/bin/cat", "--extra-vars \"infra_env={{user `infra_env`}}\""],
+      "group_vars": "ansible/group_vars"
     }
   ]
 }
