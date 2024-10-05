@@ -10,5 +10,7 @@ export DEBIAN_FRONTEND="noninteractive"
 
 # Install Ansible
 echo ">>>>>>>>>>> INSTALLING ANSIBLE"
+sudo add-apt-repository -y ppa:ansible/ansible
+
 sudo apt-get update
-sudo apt-get install -y ansible
+sudo apt-get install -y ansible --allow-unauthenticated
