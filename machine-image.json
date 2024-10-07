@@ -63,7 +63,10 @@
         "ansible/roles/nginx",
         "ansible/roles/app"
       ],
-      "extra_arguments": ["--vault-password-file=/bin/cat", "--extra-vars \"infra_env={{user `infra_env`}}\""],
+      "extra_arguments": [
+        "--vault-password-file=/bin/cat",
+        "--extra-vars \"infra_env={{user `infra_env`}}\""
+      ],
       "group_vars": "ansible/group_vars"
     }
   ]
