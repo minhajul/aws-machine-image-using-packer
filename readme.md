@@ -9,19 +9,24 @@ Packer is a free and open source tool for creating golden images for multiple pl
 - Integrate with Terraform
 
 ### Getting Started
-After cloning this project, you can start editing the configurations by modifying `machine-image.json`.
+After cloning this project, you can start editing the configurations by modifying `machine-image.pkr.hcl`.
 
 After changing the configuration, run the below command to validate the configuration:
 
 ```bash
-packer validate machine-image.json
+packer init machine-image.pkr.hcl
+```
+Then 
+
+```bash
+packer validate machine-image.pkr.hcl
 ```
 
 Then, run the below command to create an image to your configured provider account.
 
 ```bash
-packer build -var "infra_env=staging" -var "vault_pass=secret" machine-image.json
+packer build -var "infra_env=staging" machine-image.pkr.hcl
 ```
-You can to change `infra_env` and `vault_pass` whatever you want.
+You can to change `infra_env` whatever you want.
 
 Check out our [Official Documentation](https://www.packer.io/) for more details.
