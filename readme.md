@@ -9,9 +9,18 @@ Packer is a free and open source tool for creating golden images for multiple pl
 - Integrate with Terraform
 
 ### Getting Started
-After cloning this project, you can start editing the configurations by modifying `machine-image.pkr.hcl`.
+After cloning this project, you can start editing the configurations by modifying ```machine-image.pkr.hcl```.
 
-After changing the configuration, run the below command to validate the configuration:
+To proceed, you need to specify your ```vpc_id``` and ```subnet_id```. You can retrieve these values using the AWS CLI:
+
+```bash
+aws ec2 describe-vpcs --query 'Vpcs[].VpcId' --region ap-southeast-1
+
+aws ec2 describe-subnets --filters Name=vpc-id,Values=<your-vpc-id> --query 'Subnets[].SubnetId' --region ap-southeast-1
+```
+These commands will return your VPC and subnet IDs. After obtaining them, update the ```machine-image.pkr.hcl``` file accordingly.
+
+Once you've made the changes, validate your configuration using:
 
 ```bash
 packer init machine-image.pkr.hcl
@@ -27,6 +36,6 @@ Then, run the below command to create an image to your configured provider accou
 ```bash
 packer build -var "infra_env=staging" machine-image.pkr.hcl
 ```
-You can to change `infra_env` whatever you want.
+You can change `infra_env` whatever you want.
 
 Check out our [Official Documentation](https://www.packer.io/) for more details.

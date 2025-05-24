@@ -27,12 +27,29 @@ variable "infra_env" {
   default     = "dev"
 }
 
+variable "vpc_id" {
+  type        = string
+  description = "Target VPC ID for building the AMI"
+  default     = "vpc-****" # Replace with your VPC ID
+}
+
+variable "subnet_id" {
+  type        = string
+  description = "Public subnet ID for temporary instance"
+  default     = "subnet-****" # Replace with your public subnet ID
+}
+
 source "amazon-ebs" "ubuntu" {
   ami_name        = "${var.ami_prefix}-${local.timestamp}"
   ami_description = "AMI for ${var.ami_prefix} in ${var.infra_env} environment"
   instance_type   = "t2.micro"
   region          = "ap-southeast-1"
   ssh_username    = "ubuntu"
+
+  # Network configuration
+  vpc_id          = var.vpc_id
+  subnet_id       = var.subnet_id
+  associate_public_ip_address = true
 
   source_ami_filter {
     filters = {
@@ -42,7 +59,7 @@ source "amazon-ebs" "ubuntu" {
       virtualization-type = "hvm"
     }
     most_recent = true
-    owners      = ["099720109477"]
+    owners = ["099720109477"]
   }
 
   launch_block_device_mappings {
@@ -66,7 +83,7 @@ source "amazon-ebs" "ubuntu" {
 }
 
 build {
-  name    = "learn-packer"
+  name = "learn-packer"
   sources = [
     "source.amazon-ebs.ubuntu"
   ]
@@ -76,7 +93,7 @@ build {
 
   provisioner "ansible-local" {
     playbook_file = "ansible/playbook.yml"
-    role_paths    = [
+    role_paths = [
       "ansible/roles/base",
       "ansible/roles/php",
       "ansible/roles/nginx",
