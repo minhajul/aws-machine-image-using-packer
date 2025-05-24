@@ -20,6 +20,20 @@ aws ec2 describe-subnets --filters Name=vpc-id,Values=<your-vpc-id> --query 'Sub
 ```
 These commands will return your VPC and subnet IDs. After obtaining them, update the ```machine-image.pkr.hcl``` file accordingly.
 
+```bash 
+variable "vpc_id" {
+  type        = string
+  description = "Target VPC ID for building the AMI"
+  default     = "vpc-****" # Replace with your VPC ID
+}
+
+variable "subnet_id" {
+  type        = string
+  description = "Public subnet ID for temporary instance"
+  default     = "subnet-****" # Replace with your public subnet ID
+}
+```
+
 Once you've made the changes, validate your configuration using:
 
 ```bash
