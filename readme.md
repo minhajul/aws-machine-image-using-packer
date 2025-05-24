@@ -4,8 +4,6 @@ Packer is a free and open source tool for creating golden images for multiple pl
 
 ### Use Cases
 - Automated image builds
-- Golden image pipeline
-- Image compliance
 - Integrate with Terraform
 
 ### Getting Started
